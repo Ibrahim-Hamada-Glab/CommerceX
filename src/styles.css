@@ -1,1 +1,110 @@
 /* You can add global styles to this file, and also import other style files */
+
+:root {
+    /* Primary Colors */
+    --primary-color: #007bff;
+    --primary-dark: #0056b3;
+    --primary-light: #0d6efd;
+
+    /* Secondary Colors */
+    --secondary-color: #6c757d;
+    --secondary-dark: #5a6268;
+
+    /* Neutral Colors */
+    --white: #ffffff;
+    --black: #000000;
+    --gray-light: #f5f5f5;
+    --gray-medium: #e9ecef;
+    --gray-dark: #495057;
+
+    /* Status Colors */
+    --success: #28a745;
+    --danger: #dc3545;
+    --warning: #ffc107;
+    --info: #17a2b8;
+
+    /* Text Colors */
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+
+    /* Border & Shadow */
+    --border-color: #dee2e6;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+}
+a{
+    text-decoration: none;
+    color: inherit;
+}
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto Regular', 'Roboto Bold', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container{
+    max-width: 1600px;
+    margin: auto;
+    padding: 0 15px;
+}
+
+/* Full-width background wrapper */
+.full-width-section {
+    width: 100%;
+    background-color: #f5f5f5; /* Your background color */
+}
+
+.full-width-section .container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Large screens (1200px and above) */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1400px;
+        padding: 0 15px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1600px;
+        padding: 0 30px;
+    }
+}
+ 
+/* Medium screens (992px to 1199px) */
+@media (max-width: 1199px) and (min-width: 992px) {
+    .container {
+        max-width: 960px;
+        padding: 0 15px;
+    }
+}
+
+/* Small screens (768px to 991px) */
+@media (max-width: 991px) and (min-width: 768px) {
+    .container {
+        max-width: 720px;
+        padding: 0 12px;
+    }
+}
+
+/* Mobile screens (576px to 767px) */
+@media (max-width: 767px) and (min-width: 576px) {
+    .container {
+        max-width: 540px;
+        padding: 0 10px;
+    }
+}
+
+/* Extra small screens (below 576px) */
+@media (max-width: 575px) {
+    .container {
+        max-width: 100%;
+        padding: 0 8px;
+    }
+}
+
+html, body { height: 100%; }

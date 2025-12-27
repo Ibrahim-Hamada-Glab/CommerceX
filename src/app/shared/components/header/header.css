@@ -1,0 +1,41 @@
+nav {
+     width: 100vw;
+    box-shadow: 0 2px 4px rgba(0, 0, 0,0.1);
+}
+
+nav .navbar-brand {
+    font-weight: 600;
+}
+nav .navbar-brand span{
+    font-weight: 500;
+}
+ 
+ 
+nav .container form{
+  width: calc(60% - 20px);
+  display: flex;
+  gap: 10px;
+}
+
+
+.account {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+ }
+ 
+.account i {
+    font-size: 1.5rem;
+    position: relative;
+ }
+ .account i .cart-count {
+    position: absolute;
+    top: -15px;
+    right: -7px;
+    background-color: var(--info);
+    color: white;
+    border-radius: 50%;
+    padding: 6px 6px;
+    font-size: 0.75rem;
+ }
