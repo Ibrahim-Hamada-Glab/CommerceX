@@ -1,15 +1,26 @@
 <header class="products-header">
     <h1 class="products-title">All Products<span>(156 results)</span></h1>
-    <div class="sort-dropdown" (click)="toggleDropdown()">
-        <span class="sort-label">Sort by:</span>
-        <span class="sort-selected">{{ selectedSort }}</span>
-        <i class="fa-solid fa-chevron-down" [class.rotate]="isDropdownOpen"></i>
+    <div class="sort-container">
+        <button class="sort-dropdown" type="button"
+                aria-haspopup="listbox"
+                [attr.aria-expanded]="isDropdownOpen"
+                aria-label="Sort by"
+                (click)="toggleDropdown()">
+            <span class="sort-label">Sort by:</span>
+            <span class="sort-selected">{{ selectedSort }}</span>
+            <i class="fa-solid fa-chevron-down" [class.rotate]="isDropdownOpen"></i>
+        </button>
         @if (isDropdownOpen) {
-            <ul class="sort-menu">
+            <ul class="sort-menu" role="listbox">
                 @for (option of sortOptions; track option.value) {
                     <li
+                        role="option"
+                        tabindex="0"
+                        [attr.aria-selected]="option.label === selectedSort"
                         [class.active]="option.label === selectedSort"
-                        (click)="selectSort(option); $event.stopPropagation()">
+                        (click)="selectSort(option); $event.stopPropagation()"
+                        (keydown.enter)="selectSort(option); $event.stopPropagation()"
+                        (keydown.space)="selectSort(option); $event.stopPropagation()">
                         {{ option.label }}
                     </li>
                 }
@@ -48,5 +59,3 @@
     </li>
   </ul>
 </nav>
- 
- 
