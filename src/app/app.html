@@ -1,1 +1,8 @@
-<app-header></app-header>
+<app-header [cartCount]="6"></app-header>
+
+<main class="container row mt-4">
+    <app-filter-side-panel class="col-2"></app-filter-side-panel>
+    <app-products class="col-10"></app-products>
+</main>
+ 
+<router-outlet></router-outlet>

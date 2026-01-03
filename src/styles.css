@@ -55,7 +55,7 @@ a{
 }
 
 .full-width-section .container {
-    max-width: 1600px;
+    max-width: 1800px;
     margin: 0 auto;
     padding: 0 15px;
 }
@@ -70,7 +70,7 @@ a{
 
 @media (min-width: 1400px) {
     .container {
-        max-width: 1600px;
+        max-width: 1800px;
         padding: 0 30px;
     }
 }
@@ -107,4 +107,4 @@ a{
     }
 }
 
-html, body { height: 100%; }
+html, body { height: 100%; background-color: var(--gray-light); }

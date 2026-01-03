@@ -1,27 +1,63 @@
 nav {
-     width: 100vw;
-    box-shadow: 0 2px 4px rgba(0, 0, 0,0.1);
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: visible;
+}
+
+nav .container.row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0 30px;
 }
 
 nav .navbar-brand {
     font-weight: 600;
 }
 nav .navbar-brand span{
-    font-weight: 500;
+    font-weight: 400;
+    font-size: 0.75rem;
+    color: #6c757d;
+    display: block;
+    margin-top: -4px;
 }
  
  
-nav .container form{
-  width: calc(60% - 20px);
+.search-form {
+  position: relative;
   display: flex;
-  gap: 10px;
+  align-items: center;
+}
+
+.search-form .search-icon {
+  position: absolute;
+  left: 25px;
+  color: #6c757d;
+  font-size: 0.9rem;
+  pointer-events: none;
+}
+
+.search-form input {
+  width: 100%;
+  padding-left: 38px;
+  border-radius: 20px;
+  border: 1px solid #dee2e6;
+  height: 38px;
+}
+
+.search-form input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.15);
 }
 
 
 .account {
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: flex-end;
+    gap: 15px;
     font-weight: 500;
  }
  
@@ -29,13 +65,27 @@ nav .container form{
     font-size: 1.5rem;
     position: relative;
  }
- .account i .cart-count {
+.account i .cart-count {
     position: absolute;
-    top: -15px;
+    width: fit-content;
+       top: -15px;
     right: -7px;
+
     background-color: var(--info);
     color: white;
     border-radius: 50%;
-    padding: 6px 6px;
-    font-size: 0.75rem;
- }
+    padding: 2px 6px;
+    font-size: 0.65rem;
+    line-height: 1;
+}
+
+.account a {
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s ease;
+}
+
+.account a:hover i {
+    color: var(--primary);
+}
