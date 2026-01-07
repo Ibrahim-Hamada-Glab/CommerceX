@@ -43,6 +43,11 @@
     background: var(--gray-medium);
 }
 
+.sort-dropdown:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
 .sort-label {
     color: var(--text-secondary);
     white-space: nowrap;
@@ -85,7 +90,8 @@
     transition: background 0.15s ease;
 }
 
-.sort-menu li:hover {
+.sort-menu li:hover,
+.sort-menu li.focused {
     background: var(--gray-light);
 }
 
