@@ -9,6 +9,7 @@ interface SortOption {
 @Component({
   selector: 'app-products',
   imports: [Product],
+  standalone: true,
   templateUrl: './products.html',
   styleUrl: './products.css',
 })

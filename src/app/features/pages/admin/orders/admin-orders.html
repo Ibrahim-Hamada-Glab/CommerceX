@@ -1,0 +1,228 @@
+<div class="admin-layout">
+  <app-admin-sidebar></app-admin-sidebar>
+
+  <main class="admin-main">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="header-left">
+        <h1>Orders</h1>
+        <p class="subtitle">Manage and track customer orders</p>
+      </div>
+      <button class="btn-export">
+        <i class="fa-solid fa-file-export"></i>
+        Export
+      </button>
+    </div>
+
+    <!-- Status Tabs -->
+    <div class="status-tabs">
+      <button
+        *ngFor="let tab of tabs"
+        class="tab-btn"
+        [class.active]="activeTab === tab.id"
+        (click)="setActiveTab(tab.id)"
+      >
+        {{ tab.label }}
+        <span class="tab-count">{{ tab.count }}</span>
+      </button>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <div class="search-box">
+        <i class="fa-solid fa-search"></i>
+        <input type="text" [(ngModel)]="searchQuery" placeholder="Search by order ID, customer name, or email..." />
+      </div>
+      <select class="filter-select">
+        <option value="">Date: All Time</option>
+        <option value="today">Today</option>
+        <option value="week">This Week</option>
+        <option value="month">This Month</option>
+      </select>
+    </div>
+
+    <!-- Orders Table -->
+    <div class="orders-card">
+      <div class="table-wrapper">
+        <table class="orders-table">
+          <thead>
+            <tr>
+              <th><input type="checkbox" /></th>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Date</th>
+              <th>Items</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of orders">
+              <td><input type="checkbox" /></td>
+              <td class="order-id">{{ order.id }}</td>
+              <td class="customer-cell">
+                <div class="customer-avatar">{{ order.customer.avatar }}</div>
+                <div class="customer-info">
+                  <span class="name">{{ order.customer.name }}</span>
+                  <span class="email">{{ order.customer.email }}</span>
+                </div>
+              </td>
+              <td>{{ order.date | date:'MMM d, y' }}</td>
+              <td>{{ order.items }}</td>
+              <td class="total">{{ order.total | currency }}</td>
+              <td>
+                <select
+                  class="status-select"
+                  [ngClass]="getStatusClass(order.status)"
+                  [value]="order.status"
+                  (change)="updateOrderStatus(order.id, $any($event.target).value)"
+                >
+                  <option *ngFor="let status of statuses" [value]="status">
+                    {{ status | titlecase }}
+                  </option>
+                </select>
+              </td>
+              <td class="actions">
+                <button class="btn-icon" title="View Details" (click)="openOrderDetail(order)">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+                <button class="btn-icon" title="Print Invoice">
+                  <i class="fa-solid fa-print"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <span class="page-info">Showing 1-5 of 156 orders</span>
+        <div class="page-controls">
+          <button class="page-btn">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
+          <span class="page-ellipsis">...</span>
+          <button class="page-btn">32</button>
+          <button class="page-btn">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Order Detail Slide Panel -->
+<div class="detail-overlay" *ngIf="selectedOrder" (click)="closeOrderDetail()">
+  <div class="detail-panel" (click)="$event.stopPropagation()">
+    <div class="panel-header">
+      <h2>Order {{ selectedOrder.id }}</h2>
+      <button class="btn-close" (click)="closeOrderDetail()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="panel-content">
+      <!-- Order Status -->
+      <div class="detail-section">
+        <h3>Status</h3>
+        <span class="status-badge large" [ngClass]="getStatusClass(selectedOrder.status)">
+          {{ selectedOrder.status | titlecase }}
+        </span>
+      </div>
+
+      <!-- Customer Info -->
+      <div class="detail-section">
+        <h3>Customer Information</h3>
+        <div class="info-row">
+          <div class="customer-avatar large">{{ selectedOrder.customer.avatar }}</div>
+          <div class="customer-details">
+            <span class="name">{{ selectedOrder.customer.name }}</span>
+            <span class="email">{{ selectedOrder.customer.email }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shipping Address -->
+      <div class="detail-section">
+        <h3>Shipping Address</h3>
+        <p class="address">{{ selectedOrder.shippingAddress }}</p>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="detail-section">
+        <h3>Order Summary</h3>
+        <div class="summary-row">
+          <span>Items ({{ selectedOrder.items }})</span>
+          <span>{{ selectedOrder.total | currency }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Shipping</span>
+          <span class="free">FREE</span>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <span>{{ selectedOrder.total | currency }}</span>
+        </div>
+      </div>
+
+      <!-- Payment Method -->
+      <div class="detail-section">
+        <h3>Payment Method</h3>
+        <p class="payment">
+          <i class="fa-solid fa-credit-card"></i>
+          {{ selectedOrder.paymentMethod }}
+        </p>
+      </div>
+
+      <!-- Timeline -->
+      <div class="detail-section">
+        <h3>Order Timeline</h3>
+        <div class="timeline">
+          <div class="timeline-item completed">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <span class="timeline-title">Order Placed</span>
+              <span class="timeline-date">{{ selectedOrder.date | date:'MMM d, y - h:mm a' }}</span>
+            </div>
+          </div>
+          <div class="timeline-item" [class.completed]="selectedOrder.status !== 'pending'">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <span class="timeline-title">Processing</span>
+            </div>
+          </div>
+          <div class="timeline-item" [class.completed]="selectedOrder.status === 'shipped' || selectedOrder.status === 'delivered'">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <span class="timeline-title">Shipped</span>
+            </div>
+          </div>
+          <div class="timeline-item" [class.completed]="selectedOrder.status === 'delivered'">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <span class="timeline-title">Delivered</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-actions">
+      <button class="btn-secondary">
+        <i class="fa-solid fa-print"></i>
+        Print Invoice
+      </button>
+      <button class="btn-primary">
+        <i class="fa-solid fa-envelope"></i>
+        Contact Customer
+      </button>
+    </div>
+  </div>
+</div>

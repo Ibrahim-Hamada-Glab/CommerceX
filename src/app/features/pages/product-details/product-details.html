@@ -1,0 +1,166 @@
+<div class="product-details-page">
+  <div class="container">
+    <div class="product-details-wrapper">
+      <!-- Product Images Section -->
+      <div class="product-gallery">
+        <div class="main-image">
+          <div class="slider-track" [style.transform]="'translateX(-' + (selectedImageIndex * 100) + '%)'">
+            @for (image of images; track $index) {
+              <div class="slide">
+                <img [src]="image" alt="Product Image {{$index + 1}}">
+              </div>
+            }
+          </div>
+          @if (images.length > 1) {
+            <button class="nav-btn prev" (click)="prevImage()">
+              <span>&#8249;</span>
+            </button>
+            <button class="nav-btn next" (click)="nextImage()">
+              <span>&#8250;</span>
+            </button>
+            <div class="slider-dots">
+              @for (image of images; track $index) {
+                <button class="dot" [class.active]="selectedImageIndex === $index" (click)="selectImage($index)"></button>
+              }
+            </div>
+          }
+        </div>
+        <div class="thumbnail-list">
+          @for (image of images; track $index) {
+            <div class="thumbnail" [class.active]="selectedImageIndex === $index" (click)="selectImage($index)">
+              <img [src]="image" alt="Thumbnail {{$index + 1}}">
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Product Info Section -->
+      <div class="product-info">
+        <div class="product-breadcrumb">
+          <a href="/">Home</a>
+          <span class="separator">/</span>
+          <a href="/products">Products</a>
+          <span class="separator">/</span>
+          <span class="current">Product Name</span>
+        </div>
+
+        <h1 class="product-title">Premium Wireless Headphones</h1>
+
+        <div class="product-rating">
+          <div class="stars">
+            <span class="star filled">★</span>
+            <span class="star filled">★</span>
+            <span class="star filled">★</span>
+            <span class="star filled">★</span>
+            <span class="star">★</span>
+          </div>
+          <span class="rating-count">(128 reviews)</span>
+        </div>
+
+        <div class="product-price">
+          <span class="current-price">$299.99</span>
+          <span class="original-price">$399.99</span>
+          <span class="discount-badge">25% OFF</span>
+        </div>
+
+        <p class="product-description">
+          Experience premium sound quality with our wireless headphones. Featuring active noise cancellation,
+          30-hour battery life, and ultra-comfortable ear cushions for extended listening sessions.
+        </p>
+
+        <div class="product-options">
+          <div class="option-group">
+            <label class="option-label">Color</label>
+            <div class="color-options">
+              <button class="color-btn active" style="background-color: #000000;" title="Black"></button>
+              <button class="color-btn" style="background-color: #ffffff; border: 1px solid #ddd;" title="White"></button>
+              <button class="color-btn" style="background-color: #1a73e8;" title="Blue"></button>
+              <button class="color-btn" style="background-color: #ea4335;" title="Red"></button>
+            </div>
+          </div>
+
+          <div class="option-group">
+            <label class="option-label">Quantity</label>
+            <div class="quantity-selector">
+              <button class="qty-btn minus" (click)="decreaseQty()">−</button>
+              <input type="number" class="qty-input" [(ngModel)]="quantity" min="1" max="10">
+              <button class="qty-btn plus" (click)="increaseQty()">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-actions">
+          <button class="btn btn-primary add-to-cart">
+            <span class="btn-icon">🛒</span>
+            Add to Cart
+          </button>
+          <button class="btn btn-secondary buy-now">
+            Buy Now
+          </button>
+          <button class="btn btn-icon-only wishlist-btn" title="Add to Wishlist">
+            ♡
+          </button>
+        </div>
+
+        <div class="product-meta">
+          <div class="meta-item">
+            <span class="meta-icon">📦</span>
+            <span class="meta-text">Free shipping on orders over $50</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-icon">↩️</span>
+            <span class="meta-text">30-day easy returns</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-icon">🛡️</span>
+            <span class="meta-text">2-year warranty included</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Details Tabs -->
+    <div class="product-tabs">
+      <div class="tabs-header">
+        <button class="tab-btn" [class.active]="activeTab === 'description'" (click)="activeTab = 'description'">Description</button>
+        <button class="tab-btn" [class.active]="activeTab === 'specifications'" (click)="activeTab = 'specifications'">Specifications</button>
+        <button class="tab-btn" [class.active]="activeTab === 'reviews'" (click)="activeTab = 'reviews'">Reviews (128)</button>
+      </div>
+      <div class="tabs-content">
+        <div class="tab-panel" [class.active]="activeTab === 'description'">
+          <h3>Product Description</h3>
+          <p>
+            Immerse yourself in exceptional audio with our Premium Wireless Headphones.
+            Designed for audiophiles and casual listeners alike, these headphones deliver
+            crystal-clear sound with deep, powerful bass.
+          </p>
+          <h4>Key Features:</h4>
+          <ul>
+            <li>Active Noise Cancellation (ANC) technology</li>
+            <li>30-hour battery life with quick charge support</li>
+            <li>Premium memory foam ear cushions</li>
+            <li>Bluetooth 5.2 with multipoint connection</li>
+            <li>Built-in microphone for calls</li>
+            <li>Foldable design for easy portability</li>
+          </ul>
+        </div>
+        <div class="tab-panel" [class.active]="activeTab === 'specifications'">
+          <h3>Specifications</h3>
+          <ul>
+            <li>Driver Size: 40mm</li>
+            <li>Frequency Response: 20Hz - 20kHz</li>
+            <li>Impedance: 32 Ohms</li>
+            <li>Battery Life: 30 hours</li>
+            <li>Charging Time: 2 hours</li>
+            <li>Bluetooth Version: 5.2</li>
+            <li>Weight: 250g</li>
+          </ul>
+        </div>
+        <div class="tab-panel" [class.active]="activeTab === 'reviews'">
+          <h3>Customer Reviews</h3>
+          <p>Reviews coming soon...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

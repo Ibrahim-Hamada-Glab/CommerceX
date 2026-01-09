@@ -1,0 +1,157 @@
+<div class="admin-layout">
+  <app-admin-sidebar></app-admin-sidebar>
+
+  <main class="admin-main">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="header-left">
+        <h1>Products</h1>
+        <p class="subtitle">Manage your product inventory</p>
+      </div>
+      <button class="btn-add" (click)="openAddModal()">
+        <i class="fa-solid fa-plus"></i>
+        Add Product
+      </button>
+    </div>
+
+    <!-- Filters Bar -->
+    <div class="filters-bar">
+      <div class="search-box">
+        <i class="fa-solid fa-search"></i>
+        <input type="text" [(ngModel)]="searchQuery" placeholder="Search products..." />
+      </div>
+      <select [(ngModel)]="selectedCategory" class="filter-select">
+        <option value="">All Categories</option>
+        <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+      </select>
+      <select class="filter-select">
+        <option value="">All Status</option>
+        <option value="active">Active</option>
+        <option value="out_of_stock">Out of Stock</option>
+        <option value="low_stock">Low Stock</option>
+      </select>
+    </div>
+
+    <!-- Products Table -->
+    <div class="products-card">
+      <div class="table-wrapper">
+        <table class="products-table">
+          <thead>
+            <tr>
+              <th><input type="checkbox" /></th>
+              <th>Product</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of products">
+              <td><input type="checkbox" /></td>
+              <td class="product-cell">
+                <img [src]="product.image" [alt]="product.name" />
+                <span class="product-name">{{ product.name }}</span>
+              </td>
+              <td>{{ product.category }}</td>
+              <td class="price">{{ product.price | currency }}</td>
+              <td class="stock">{{ product.stock }}</td>
+              <td>
+                <span class="status-badge" [ngClass]="getStatusClass(product.status)">
+                  {{ getStatusLabel(product.status) }}
+                </span>
+              </td>
+              <td class="actions">
+                <button class="btn-icon" title="Edit" (click)="openEditModal(product)">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+                <button class="btn-icon btn-delete" title="Delete" (click)="deleteProduct(product.id)">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <span class="page-info">Showing 1-6 of 18 products</span>
+        <div class="page-controls">
+          <button class="page-btn" [disabled]="currentPage === 1">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button class="page-btn" [class.active]="currentPage === 1">1</button>
+          <button class="page-btn" [class.active]="currentPage === 2">2</button>
+          <button class="page-btn" [class.active]="currentPage === 3">3</button>
+          <button class="page-btn" [disabled]="currentPage === totalPages">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Add/Edit Modal -->
+<div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ editingProduct ? 'Edit Product' : 'Add New Product' }}</h2>
+      <button class="btn-close" (click)="closeModal()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <form class="modal-form">
+      <div class="form-group">
+        <label>Product Name</label>
+        <input type="text" placeholder="Enter product name" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Category</label>
+          <select>
+            <option value="">Select category</option>
+            <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Price</label>
+          <input type="number" placeholder="0.00" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Stock Quantity</label>
+          <input type="number" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea rows="4" placeholder="Enter product description"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Product Images</label>
+        <div class="image-upload">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
+          <p>Drop images here or click to upload</p>
+          <span>PNG, JPG up to 5MB</span>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
+        <button type="submit" class="btn-save">
+          {{ editingProduct ? 'Update Product' : 'Add Product' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

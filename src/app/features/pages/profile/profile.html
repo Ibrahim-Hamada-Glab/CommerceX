@@ -1,0 +1,253 @@
+<div class="profile-page">
+  <div class="container">
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1>My Account</h1>
+      <p class="subtitle">Manage your profile and preferences</p>
+    </div>
+
+    <div class="profile-content">
+      <!-- Sidebar -->
+      <aside class="profile-sidebar">
+        <!-- User Card -->
+        <div class="user-card">
+          <div class="user-avatar">{{ user.avatar }}</div>
+          <h2 class="user-name">{{ user.firstName }} {{ user.lastName }}</h2>
+          <p class="user-email">{{ user.email }}</p>
+          <p class="member-since">Member since {{ user.memberSince | date:'MMMM y' }}</p>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="profile-nav">
+          <button
+            class="nav-item"
+            [class.active]="activeTab === 'personal'"
+            (click)="setActiveTab('personal')"
+          >
+            <i class="fa-solid fa-user"></i>
+            Personal Info
+          </button>
+          <button
+            class="nav-item"
+            [class.active]="activeTab === 'addresses'"
+            (click)="setActiveTab('addresses')"
+          >
+            <i class="fa-solid fa-location-dot"></i>
+            Addresses
+          </button>
+          <button
+            class="nav-item"
+            [class.active]="activeTab === 'payments'"
+            (click)="setActiveTab('payments')"
+          >
+            <i class="fa-solid fa-credit-card"></i>
+            Payment Methods
+          </button>
+          <button
+            class="nav-item"
+            [class.active]="activeTab === 'preferences'"
+            (click)="setActiveTab('preferences')"
+          >
+            <i class="fa-solid fa-gear"></i>
+            Preferences
+          </button>
+        </nav>
+
+        <!-- Quick Links -->
+        <div class="quick-links">
+          <a routerLink="/orders"><i class="fa-solid fa-box"></i> Order History</a>
+          <a routerLink="/"><i class="fa-solid fa-store"></i> Continue Shopping</a>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="profile-main">
+        <!-- Personal Info Tab -->
+        <section class="tab-content" *ngIf="activeTab === 'personal'">
+          <div class="content-header">
+            <h2>Personal Information</h2>
+            <p>Update your personal details</p>
+          </div>
+
+          <form class="profile-form" (ngSubmit)="savePersonalInfo()">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" [(ngModel)]="user.firstName" name="firstName" />
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" [(ngModel)]="user.lastName" name="lastName" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" [(ngModel)]="user.email" name="email" />
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" [(ngModel)]="user.phone" name="phone" />
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-save">Save Changes</button>
+            </div>
+          </form>
+
+          <!-- Change Password Section -->
+          <div class="password-section">
+            <h3>Change Password</h3>
+            <form class="password-form">
+              <div class="form-group">
+                <label for="currentPassword">Current Password</label>
+                <input type="password" id="currentPassword" placeholder="Enter current password" />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="newPassword">New Password</label>
+                  <input type="password" id="newPassword" placeholder="Enter new password" />
+                </div>
+                <div class="form-group">
+                  <label for="confirmPassword">Confirm Password</label>
+                  <input type="password" id="confirmPassword" placeholder="Confirm new password" />
+                </div>
+              </div>
+              <button type="submit" class="btn-secondary">Update Password</button>
+            </form>
+          </div>
+        </section>
+
+        <!-- Addresses Tab -->
+        <section class="tab-content" *ngIf="activeTab === 'addresses'">
+          <div class="content-header">
+            <h2>Saved Addresses</h2>
+            <button class="btn-add">
+              <i class="fa-solid fa-plus"></i>
+              Add Address
+            </button>
+          </div>
+
+          <div class="addresses-grid">
+            <div class="address-card" *ngFor="let address of addresses" [class.default]="address.isDefault">
+              <div class="address-header">
+                <span class="address-label">{{ address.label }}</span>
+                <span class="default-badge" *ngIf="address.isDefault">Default</span>
+              </div>
+              <div class="address-body">
+                <p class="name">{{ address.name }}</p>
+                <p>{{ address.address }}</p>
+                <p>{{ address.city }}, {{ address.state }} {{ address.zipCode }}</p>
+                <p>{{ address.country }}</p>
+                <p class="phone">{{ address.phone }}</p>
+              </div>
+              <div class="address-actions">
+                <button class="btn-text" *ngIf="!address.isDefault" (click)="setDefaultAddress(address.id)">
+                  Set as Default
+                </button>
+                <button class="btn-text">Edit</button>
+                <button class="btn-text danger" (click)="deleteAddress(address.id)">Delete</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Payment Methods Tab -->
+        <section class="tab-content" *ngIf="activeTab === 'payments'">
+          <div class="content-header">
+            <h2>Payment Methods</h2>
+            <button class="btn-add">
+              <i class="fa-solid fa-plus"></i>
+              Add Card
+            </button>
+          </div>
+
+          <div class="payments-list">
+            <div class="payment-card" *ngFor="let pm of paymentMethods" [class.default]="pm.isDefault">
+              <div class="card-icon">
+                <i [class]="getCardIcon(pm.type)"></i>
+              </div>
+              <div class="card-details">
+                <span class="card-number">•••• •••• •••• {{ pm.lastFour }}</span>
+                <span class="card-info">{{ pm.name }} | Expires {{ pm.expiry }}</span>
+              </div>
+              <div class="card-badge" *ngIf="pm.isDefault">Default</div>
+              <div class="card-actions">
+                <button class="btn-icon" *ngIf="!pm.isDefault" (click)="setDefaultPayment(pm.id)" title="Set as Default">
+                  <i class="fa-solid fa-check"></i>
+                </button>
+                <button class="btn-icon danger" (click)="deletePayment(pm.id)" title="Remove">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="security-note">
+            <i class="fa-solid fa-shield-halved"></i>
+            <p>Your payment information is encrypted and securely stored.</p>
+          </div>
+        </section>
+
+        <!-- Preferences Tab -->
+        <section class="tab-content" *ngIf="activeTab === 'preferences'">
+          <div class="content-header">
+            <h2>Notification Preferences</h2>
+            <p>Choose what updates you'd like to receive</p>
+          </div>
+
+          <div class="preferences-list">
+            <div class="preference-item">
+              <div class="preference-info">
+                <h4>Email Notifications</h4>
+                <p>Receive important updates via email</p>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" [(ngModel)]="preferences.emailNotifications" />
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="preference-item">
+              <div class="preference-info">
+                <h4>Order Updates</h4>
+                <p>Get notified about your order status changes</p>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" [(ngModel)]="preferences.orderUpdates" />
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="preference-item">
+              <div class="preference-info">
+                <h4>Newsletter</h4>
+                <p>Receive our weekly newsletter with tips and updates</p>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" [(ngModel)]="preferences.newsletter" />
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="preference-item">
+              <div class="preference-info">
+                <h4>Promotions & Offers</h4>
+                <p>Be the first to know about sales and special offers</p>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" [(ngModel)]="preferences.promotions" />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn-save" (click)="savePreferences()">Save Preferences</button>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</div>

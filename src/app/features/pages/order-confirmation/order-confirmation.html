@@ -1,0 +1,129 @@
+<div class="confirmation-page">
+  <div class="container">
+    <!-- Success Header -->
+    <div class="success-header">
+      <div class="success-icon">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <h1>Order Confirmed!</h1>
+      <p>Thank you for your purchase. Your order has been received.</p>
+    </div>
+
+    <!-- Order Info Banner -->
+    <div class="order-banner">
+      <div class="banner-item">
+        <span class="label">Order Number</span>
+        <span class="value">{{ orderNumber }}</span>
+      </div>
+      <div class="banner-divider"></div>
+      <div class="banner-item">
+        <span class="label">Order Date</span>
+        <span class="value">{{ orderDate | date:'MMMM d, y' }}</span>
+      </div>
+      <div class="banner-divider"></div>
+      <div class="banner-item">
+        <span class="label">Estimated Delivery</span>
+        <span class="value">{{ estimatedDelivery.start }} - {{ estimatedDelivery.end }}</span>
+      </div>
+    </div>
+
+    <div class="confirmation-content">
+      <!-- Order Details -->
+      <div class="order-details">
+        <!-- Items Ordered -->
+        <div class="detail-card">
+          <h2><i class="fa-solid fa-box"></i> Items Ordered</h2>
+          <div class="order-items">
+            <div class="order-item" *ngFor="let item of orderItems">
+              <img [src]="item.image" [alt]="item.name" />
+              <div class="item-info">
+                <h3>{{ item.name }}</h3>
+                <p>Quantity: {{ item.quantity }}</p>
+              </div>
+              <span class="item-price">{{ item.price * item.quantity | currency }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shipping & Payment -->
+        <div class="detail-row">
+          <div class="detail-card half">
+            <h2><i class="fa-solid fa-truck"></i> Shipping Address</h2>
+            <div class="detail-content">
+              <p class="name">{{ shippingAddress.name }}</p>
+              <p>{{ shippingAddress.address }}</p>
+              <p>{{ shippingAddress.city }}, {{ shippingAddress.state }} {{ shippingAddress.zipCode }}</p>
+              <p>{{ shippingAddress.country }}</p>
+            </div>
+          </div>
+
+          <div class="detail-card half">
+            <h2><i class="fa-solid fa-credit-card"></i> Payment Method</h2>
+            <div class="detail-content">
+              <div class="payment-info">
+                <i class="fa-brands fa-cc-visa"></i>
+                <span>{{ paymentMethod.type }} ending in {{ paymentMethod.lastFour }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="order-summary">
+        <h2>Order Summary</h2>
+
+        <div class="summary-row">
+          <span>Subtotal ({{ orderItems.length }} items)</span>
+          <span>{{ subtotal | currency }}</span>
+        </div>
+
+        <div class="summary-row">
+          <span>Shipping</span>
+          <span class="free">FREE</span>
+        </div>
+
+        <div class="summary-row">
+          <span>Tax</span>
+          <span>{{ tax | currency }}</span>
+        </div>
+
+        <div class="summary-divider"></div>
+
+        <div class="summary-row total">
+          <span>Total</span>
+          <span>{{ total | currency }}</span>
+        </div>
+
+        <div class="summary-actions">
+          <a routerLink="/orders" class="btn-track">
+            <i class="fa-solid fa-location-dot"></i>
+            Track Order
+          </a>
+          <a routerLink="/" class="btn-continue">
+            Continue Shopping
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Help Section -->
+    <div class="help-section">
+      <div class="help-card">
+        <i class="fa-solid fa-envelope"></i>
+        <div class="help-content">
+          <h3>Confirmation Email</h3>
+          <p>A confirmation email has been sent to your registered email address.</p>
+        </div>
+      </div>
+      <div class="help-card">
+        <i class="fa-solid fa-headset"></i>
+        <div class="help-content">
+          <h3>Need Help?</h3>
+          <p>Contact our support team at <a href="mailto:support@commercex.com">support&#64;commercex.com</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,142 @@
+<div class="cart-page">
+  <div class="container">
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1>Shopping Cart</h1>
+      <p class="item-count" *ngIf="cartItems.length > 0">{{ cartItems.length }} item(s) in your cart</p>
+    </div>
+
+    <!-- Cart Content -->
+    <div class="cart-content" *ngIf="cartItems.length > 0">
+      <!-- Cart Items -->
+      <div class="cart-items">
+        <!-- Cart Header -->
+        <div class="cart-header">
+          <span class="col-product">Product</span>
+          <span class="col-price">Price</span>
+          <span class="col-quantity">Quantity</span>
+          <span class="col-total">Total</span>
+          <span class="col-action"></span>
+        </div>
+
+        <!-- Cart Item -->
+        <div class="cart-item" *ngFor="let item of cartItems">
+          <div class="col-product">
+            <img [src]="item.image" [alt]="item.name" class="item-image" />
+            <div class="item-details">
+              <h3 class="item-name">{{ item.name }}</h3>
+              <p class="item-variant">Color: {{ item.color }}</p>
+            </div>
+          </div>
+
+          <div class="col-price">
+            <span class="current-price">{{ item.price | currency }}</span>
+            <span class="original-price" *ngIf="item.originalPrice > item.price">
+              {{ item.originalPrice | currency }}
+            </span>
+          </div>
+
+          <div class="col-quantity">
+            <div class="quantity-selector">
+              <button class="qty-btn" (click)="decreaseQty(item)">
+                <i class="fa-solid fa-minus"></i>
+              </button>
+              <span class="qty-value">{{ item.quantity }}</span>
+              <button class="qty-btn" (click)="increaseQty(item)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="col-total">
+            <span class="item-total">{{ item.price * item.quantity | currency }}</span>
+          </div>
+
+          <div class="col-action">
+            <button class="btn-remove" (click)="removeItem(item.id)">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Cart Actions -->
+        <div class="cart-actions">
+          <a routerLink="/" class="btn-continue">
+            <i class="fa-solid fa-arrow-left"></i>
+            Continue Shopping
+          </a>
+          <button class="btn-clear" (click)="clearCart()">
+            <i class="fa-solid fa-trash"></i>
+            Clear Cart
+          </button>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="order-summary">
+        <h2 class="summary-title">Order Summary</h2>
+
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>{{ subtotal | currency }}</span>
+        </div>
+
+        <div class="summary-row">
+          <span>Shipping</span>
+          <span *ngIf="shipping === 0" class="free-shipping">FREE</span>
+          <span *ngIf="shipping > 0">{{ shipping | currency }}</span>
+        </div>
+
+        <div class="summary-row">
+          <span>Estimated Tax</span>
+          <span>{{ tax | currency }}</span>
+        </div>
+
+        <div class="promo-code">
+          <input type="text" placeholder="Enter promo code" />
+          <button class="btn-apply">Apply</button>
+        </div>
+
+        <div class="summary-divider"></div>
+
+        <div class="summary-row total-row">
+          <span>Total</span>
+          <span class="total-amount">{{ total | currency }}</span>
+        </div>
+
+        <a routerLink="/checkout" class="btn-checkout">
+          Proceed to Checkout
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+        <div class="payment-methods">
+          <span>We accept:</span>
+          <div class="payment-icons">
+            <i class="fa-brands fa-cc-visa"></i>
+            <i class="fa-brands fa-cc-mastercard"></i>
+            <i class="fa-brands fa-cc-amex"></i>
+            <i class="fa-brands fa-cc-paypal"></i>
+          </div>
+        </div>
+
+        <div class="secure-checkout">
+          <i class="fa-solid fa-lock"></i>
+          <span>Secure Checkout</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty Cart State -->
+    <div class="empty-cart" *ngIf="cartItems.length === 0">
+      <div class="empty-icon">
+        <i class="fa-solid fa-cart-shopping"></i>
+      </div>
+      <h2>Your cart is empty</h2>
+      <p>Looks like you haven't added anything to your cart yet.</p>
+      <a routerLink="/" class="btn-shop">
+        Start Shopping
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</div>

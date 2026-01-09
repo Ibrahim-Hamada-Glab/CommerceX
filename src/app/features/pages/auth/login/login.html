@@ -1,0 +1,86 @@
+<div class="login-page">
+  <div class="login-container">
+    <!-- Logo -->
+    <div class="logo-section">
+      <a routerLink="/" class="logo">
+        <span class="logo-icon"><i class="fa-solid fa-store"></i></span>
+        <span class="logo-text">CommerceX</span>
+      </a>
+      <p class="tagline">Welcome back! Sign in to continue.</p>
+    </div>
+
+    <!-- Login Form -->
+    <form class="login-form" (ngSubmit)="onSubmit()">
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-envelope input-icon"></i>
+          <input
+            type="email"
+            id="email"
+            [(ngModel)]="email"
+            name="email"
+            placeholder="Enter your email"
+            autocomplete="email"
+          />
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-lock input-icon"></i>
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            [(ngModel)]="password"
+            name="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+          />
+          <button type="button" class="toggle-password" (click)="togglePassword()">
+            <i [class]="showPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Remember & Forgot -->
+      <div class="form-options">
+        <label class="remember-me">
+          <input type="checkbox" />
+          <span>Remember me</span>
+        </label>
+        <a routerLink="/forgot-password" class="forgot-link">Forgot Password?</a>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn-login">
+        Sign In
+      </button>
+    </form>
+
+    <!-- Divider -->
+    <div class="divider">
+      <span>or continue with</span>
+    </div>
+
+    <!-- Social Login -->
+    <div class="social-login">
+      <button type="button" class="btn-social btn-google">
+        <i class="fa-brands fa-google"></i>
+        <span>Google</span>
+      </button>
+      <button type="button" class="btn-social btn-facebook">
+        <i class="fa-brands fa-facebook-f"></i>
+        <span>Facebook</span>
+      </button>
+    </div>
+
+    <!-- Register Link -->
+    <p class="register-link">
+      Don't have an account? <a routerLink="/register">Sign up</a>
+    </p>
+  </div>
+</div>

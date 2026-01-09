@@ -1,0 +1,119 @@
+<div class="register-page">
+  <div class="register-container">
+    <!-- Logo -->
+    <div class="logo-section">
+      <a routerLink="/" class="logo">
+        <span class="logo-icon"><i class="fa-solid fa-store"></i></span>
+        <span class="logo-text">CommerceX</span>
+      </a>
+      <p class="tagline">Create your account to get started.</p>
+    </div>
+
+    <!-- Register Form -->
+    <form class="register-form" (ngSubmit)="onSubmit()">
+      <!-- Full Name Field -->
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-user input-icon"></i>
+          <input
+            type="text"
+            id="fullName"
+            [(ngModel)]="fullName"
+            name="fullName"
+            placeholder="Enter your full name"
+            autocomplete="name"
+          />
+        </div>
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-envelope input-icon"></i>
+          <input
+            type="email"
+            id="email"
+            [(ngModel)]="email"
+            name="email"
+            placeholder="Enter your email"
+            autocomplete="email"
+          />
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-lock input-icon"></i>
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            [(ngModel)]="password"
+            name="password"
+            placeholder="Create a password"
+            autocomplete="new-password"
+          />
+          <button type="button" class="toggle-password" (click)="togglePassword()">
+            <i [class]="showPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+          </button>
+        </div>
+        <span class="password-hint">Must be at least 8 characters</span>
+      </div>
+
+      <!-- Confirm Password Field -->
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-lock input-icon"></i>
+          <input
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            id="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            name="confirmPassword"
+            placeholder="Confirm your password"
+            autocomplete="new-password"
+          />
+          <button type="button" class="toggle-password" (click)="toggleConfirmPassword()">
+            <i [class]="showConfirmPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Terms Checkbox -->
+      <label class="terms-checkbox">
+        <input type="checkbox" [(ngModel)]="agreeTerms" name="agreeTerms" />
+        <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+      </label>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn-register">
+        Create Account
+      </button>
+    </form>
+
+    <!-- Divider -->
+    <div class="divider">
+      <span>or sign up with</span>
+    </div>
+
+    <!-- Social Register -->
+    <div class="social-register">
+      <button type="button" class="btn-social btn-google">
+        <i class="fa-brands fa-google"></i>
+        <span>Google</span>
+      </button>
+      <button type="button" class="btn-social btn-facebook">
+        <i class="fa-brands fa-facebook-f"></i>
+        <span>Facebook</span>
+      </button>
+    </div>
+
+    <!-- Login Link -->
+    <p class="login-link">
+      Already have an account? <a routerLink="/login">Sign in</a>
+    </p>
+  </div>
+</div>

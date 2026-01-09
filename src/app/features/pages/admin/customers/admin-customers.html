@@ -1,0 +1,222 @@
+<div class="admin-layout">
+  <app-admin-sidebar></app-admin-sidebar>
+
+  <main class="admin-main">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="header-left">
+        <h1>Customers</h1>
+        <p class="subtitle">Manage your customer accounts</p>
+      </div>
+      <button class="btn-export">
+        <i class="fa-solid fa-file-export"></i>
+        Export
+      </button>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon blue">
+          <i class="fa-solid fa-users"></i>
+        </div>
+        <div class="stat-info">
+          <span class="stat-value">2,847</span>
+          <span class="stat-label">Total Customers</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon green">
+          <i class="fa-solid fa-user-check"></i>
+        </div>
+        <div class="stat-info">
+          <span class="stat-value">2,651</span>
+          <span class="stat-label">Active Customers</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon orange">
+          <i class="fa-solid fa-user-plus"></i>
+        </div>
+        <div class="stat-info">
+          <span class="stat-value">156</span>
+          <span class="stat-label">New This Month</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search & Filters -->
+    <div class="filters-bar">
+      <div class="search-box">
+        <i class="fa-solid fa-search"></i>
+        <input type="text" [(ngModel)]="searchQuery" placeholder="Search by name or email..." />
+      </div>
+      <select [(ngModel)]="statusFilter" class="filter-select">
+        <option value="">All Status</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+    </div>
+
+    <!-- Customers Table -->
+    <div class="customers-card">
+      <div class="table-wrapper">
+        <table class="customers-table">
+          <thead>
+            <tr>
+              <th><input type="checkbox" /></th>
+              <th>Customer</th>
+              <th>Orders</th>
+              <th>Total Spent</th>
+              <th>Joined</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let customer of customers">
+              <td><input type="checkbox" /></td>
+              <td class="customer-cell">
+                <div class="customer-avatar">{{ customer.avatar }}</div>
+                <div class="customer-info">
+                  <span class="name">{{ customer.name }}</span>
+                  <span class="email">{{ customer.email }}</span>
+                </div>
+              </td>
+              <td class="orders-count">{{ customer.orders }}</td>
+              <td class="total-spent">{{ customer.totalSpent | currency }}</td>
+              <td class="joined-date">{{ customer.joinedDate | date:'MMM d, y' }}</td>
+              <td>
+                <span class="status-badge" [ngClass]="getStatusClass(customer.status)">
+                  {{ customer.status | titlecase }}
+                </span>
+              </td>
+              <td class="actions">
+                <button class="btn-icon" title="View Details" (click)="openCustomerDetail(customer)">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+                <button class="btn-icon" title="Send Email">
+                  <i class="fa-solid fa-envelope"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <span class="page-info">Showing 1-6 of 2,847 customers</span>
+        <div class="page-controls">
+          <button class="page-btn">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
+          <span class="page-ellipsis">...</span>
+          <button class="page-btn">475</button>
+          <button class="page-btn">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Customer Detail Slide Panel -->
+<div class="detail-overlay" *ngIf="selectedCustomer" (click)="closeCustomerDetail()">
+  <div class="detail-panel" (click)="$event.stopPropagation()">
+    <div class="panel-header">
+      <h2>Customer Details</h2>
+      <button class="btn-close" (click)="closeCustomerDetail()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="panel-content">
+      <!-- Customer Profile -->
+      <div class="customer-profile">
+        <div class="profile-avatar">{{ selectedCustomer.avatar }}</div>
+        <h3>{{ selectedCustomer.name }}</h3>
+        <p class="profile-email">{{ selectedCustomer.email }}</p>
+        <span class="status-badge" [ngClass]="getStatusClass(selectedCustomer.status)">
+          {{ selectedCustomer.status | titlecase }}
+        </span>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="detail-section">
+        <h4>Contact Information</h4>
+        <div class="info-grid">
+          <div class="info-item">
+            <i class="fa-solid fa-envelope"></i>
+            <span>{{ selectedCustomer.email }}</span>
+          </div>
+          <div class="info-item">
+            <i class="fa-solid fa-phone"></i>
+            <span>{{ selectedCustomer.phone }}</span>
+          </div>
+          <div class="info-item">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>{{ selectedCustomer.address }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="detail-section">
+        <h4>Customer Stats</h4>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="stat-number">{{ selectedCustomer.orders }}</span>
+            <span class="stat-text">Total Orders</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">{{ selectedCustomer.totalSpent | currency }}</span>
+            <span class="stat-text">Total Spent</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">{{ selectedCustomer.joinedDate | date:'MMM y' }}</span>
+            <span class="stat-text">Member Since</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Orders -->
+      <div class="detail-section">
+        <h4>Recent Orders</h4>
+        <div class="recent-orders" *ngIf="selectedCustomer.orders > 0">
+          <div class="order-item" *ngFor="let order of recentOrders">
+            <div class="order-info">
+              <span class="order-id">{{ order.id }}</span>
+              <span class="order-date">{{ order.date | date:'MMM d, y' }}</span>
+            </div>
+            <div class="order-right">
+              <span class="order-total">{{ order.total | currency }}</span>
+              <span class="order-status" [ngClass]="getOrderStatusClass(order.status)">
+                {{ order.status | titlecase }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="no-orders" *ngIf="selectedCustomer.orders === 0">
+          <i class="fa-solid fa-box-open"></i>
+          <p>No orders yet</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-actions">
+      <button class="btn-secondary">
+        <i class="fa-solid fa-envelope"></i>
+        Send Email
+      </button>
+      <button class="btn-primary">
+        <i class="fa-solid fa-shopping-bag"></i>
+        View Orders
+      </button>
+    </div>
+  </div>
+</div>

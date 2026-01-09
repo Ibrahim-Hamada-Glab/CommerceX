@@ -1,0 +1,134 @@
+<div class="orders-page">
+  <div class="container">
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1>Order History</h1>
+      <p class="subtitle">Track and manage your orders</p>
+    </div>
+
+    <!-- Orders List -->
+    <div class="orders-list" *ngIf="orders.length > 0">
+      <div class="order-card" *ngFor="let order of orders" [class.expanded]="expandedOrder === order.id">
+        <!-- Order Header -->
+        <div class="order-header" (click)="toggleExpand(order.id)">
+          <div class="order-info">
+            <div class="order-id">
+              <span class="label">Order</span>
+              <span class="value">{{ order.id }}</span>
+            </div>
+            <div class="order-date">
+              <i class="fa-regular fa-calendar"></i>
+              {{ order.date | date:'MMM d, y' }}
+            </div>
+          </div>
+
+          <div class="order-meta">
+            <span class="status-badge" [ngClass]="getStatusClass(order.status)">
+              {{ getStatusLabel(order.status) }}
+            </span>
+            <span class="order-total">{{ order.total | currency }}</span>
+            <button class="expand-btn">
+              <i [class]="expandedOrder === order.id ? 'fa-solid fa-chevron-up' : 'fa-solid fa-chevron-down'"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Order Preview (Always Visible) -->
+        <div class="order-preview">
+          <div class="preview-images">
+            <img *ngFor="let item of order.items.slice(0, 3)" [src]="item.image" [alt]="item.name" />
+            <span class="more-items" *ngIf="order.itemCount > 3">+{{ order.itemCount - 3 }}</span>
+          </div>
+          <span class="item-count">{{ order.itemCount }} item(s)</span>
+        </div>
+
+        <!-- Order Details (Expanded) -->
+        <div class="order-details" *ngIf="expandedOrder === order.id">
+          <div class="details-grid">
+            <!-- Items List -->
+            <div class="detail-section">
+              <h3>Items Ordered</h3>
+              <div class="items-list">
+                <div class="item-row" *ngFor="let item of order.items">
+                  <img [src]="item.image" [alt]="item.name" />
+                  <span class="item-name">{{ item.name }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Order Actions -->
+            <div class="detail-section">
+              <h3>Actions</h3>
+              <div class="action-buttons">
+                <button class="btn-action">
+                  <i class="fa-solid fa-location-dot"></i>
+                  Track Order
+                </button>
+                <button class="btn-action">
+                  <i class="fa-solid fa-file-invoice"></i>
+                  View Invoice
+                </button>
+                <button class="btn-action" *ngIf="order.status === 'delivered'">
+                  <i class="fa-solid fa-rotate-left"></i>
+                  Return Items
+                </button>
+                <button class="btn-action btn-reorder">
+                  <i class="fa-solid fa-cart-plus"></i>
+                  Reorder
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tracking Progress -->
+          <div class="tracking-section" *ngIf="order.status !== 'cancelled'">
+            <h3>Order Progress</h3>
+            <div class="tracking-steps">
+              <div class="tracking-step completed">
+                <div class="step-icon"><i class="fa-solid fa-check"></i></div>
+                <span>Order Placed</span>
+              </div>
+              <div class="tracking-line" [class.active]="order.status !== 'processing'"></div>
+              <div class="tracking-step" [class.completed]="order.status === 'shipped' || order.status === 'delivered'" [class.active]="order.status === 'processing'">
+                <div class="step-icon">
+                  <i *ngIf="order.status === 'shipped' || order.status === 'delivered'" class="fa-solid fa-check"></i>
+                  <span *ngIf="order.status === 'processing'">2</span>
+                </div>
+                <span>Processing</span>
+              </div>
+              <div class="tracking-line" [class.active]="order.status === 'delivered'"></div>
+              <div class="tracking-step" [class.completed]="order.status === 'delivered'" [class.active]="order.status === 'shipped'">
+                <div class="step-icon">
+                  <i *ngIf="order.status === 'delivered'" class="fa-solid fa-check"></i>
+                  <span *ngIf="order.status !== 'delivered'">3</span>
+                </div>
+                <span>Shipped</span>
+              </div>
+              <div class="tracking-line" [class.active]="order.status === 'delivered'"></div>
+              <div class="tracking-step" [class.completed]="order.status === 'delivered'">
+                <div class="step-icon">
+                  <i *ngIf="order.status === 'delivered'" class="fa-solid fa-check"></i>
+                  <span *ngIf="order.status !== 'delivered'">4</span>
+                </div>
+                <span>Delivered</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="orders.length === 0">
+      <div class="empty-icon">
+        <i class="fa-solid fa-box-open"></i>
+      </div>
+      <h2>No orders yet</h2>
+      <p>You haven't placed any orders. Start shopping to see your orders here!</p>
+      <a routerLink="/" class="btn-shop">
+        Start Shopping
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</div>

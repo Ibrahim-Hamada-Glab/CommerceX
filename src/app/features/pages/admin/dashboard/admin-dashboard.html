@@ -1,0 +1,120 @@
+<div class="admin-layout">
+  <app-admin-sidebar></app-admin-sidebar>
+
+  <main class="admin-main">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="header-left">
+        <h1>Dashboard</h1>
+        <p class="subtitle">Welcome back! Here's what's happening with your store.</p>
+      </div>
+      <div class="header-right">
+        <div class="date-display">
+          <i class="fa-regular fa-calendar"></i>
+          <span>{{ today | date:'MMMM d, y' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card" *ngFor="let stat of stats" [ngClass]="'stat-' + stat.color">
+        <div class="stat-icon">
+          <i [class]="stat.icon"></i>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">{{ stat.label }}</span>
+          <span class="stat-value">{{ stat.value }}</span>
+          <span class="stat-change" [class.positive]="stat.trend === 'up'" [class.negative]="stat.trend === 'down'">
+            <i [class]="stat.trend === 'up' ? 'fa-solid fa-arrow-up' : 'fa-solid fa-arrow-down'"></i>
+            {{ stat.change }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <!-- Recent Orders -->
+      <div class="dashboard-card orders-card">
+        <div class="card-header">
+          <h2>Recent Orders</h2>
+          <a routerLink="/admin/orders" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="orders-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let order of recentOrders">
+                <td class="order-id">{{ order.id }}</td>
+                <td class="customer-info">
+                  <span class="name">{{ order.customer }}</span>
+                  <span class="email">{{ order.email }}</span>
+                </td>
+                <td>{{ order.date | date:'MMM d' }}</td>
+                <td class="total">{{ order.total | currency }}</td>
+                <td>
+                  <span class="status-badge" [ngClass]="getStatusClass(order.status)">
+                    {{ order.status }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Quick Actions & Chart Placeholder -->
+      <div class="sidebar-cards">
+        <!-- Quick Actions -->
+        <div class="dashboard-card">
+          <div class="card-header">
+            <h2>Quick Actions</h2>
+          </div>
+          <div class="quick-actions">
+            <a routerLink="/admin/products" class="action-btn">
+              <i class="fa-solid fa-plus"></i>
+              Add Product
+            </a>
+            <a routerLink="/admin/orders" class="action-btn">
+              <i class="fa-solid fa-eye"></i>
+              View Orders
+            </a>
+            <button class="action-btn">
+              <i class="fa-solid fa-file-export"></i>
+              Export Report
+            </button>
+            <button class="action-btn">
+              <i class="fa-solid fa-gear"></i>
+              Settings
+            </button>
+          </div>
+        </div>
+
+        <!-- Chart Placeholder -->
+        <div class="dashboard-card chart-card">
+          <div class="card-header">
+            <h2>Sales Overview</h2>
+            <select class="period-select">
+              <option>Last 7 days</option>
+              <option>Last 30 days</option>
+              <option>Last 90 days</option>
+            </select>
+          </div>
+          <div class="chart-placeholder">
+            <i class="fa-solid fa-chart-line"></i>
+            <p>Chart will be displayed here</p>
+            <span>Integration with charting library pending</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

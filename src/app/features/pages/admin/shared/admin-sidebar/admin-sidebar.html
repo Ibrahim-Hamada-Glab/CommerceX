@@ -1,0 +1,36 @@
+<aside class="admin-sidebar" [class.collapsed]="collapsed">
+  <!-- Logo -->
+  <div class="sidebar-header">
+    <a routerLink="/admin" class="logo">
+      <span class="logo-icon"><i class="fa-solid fa-store"></i></span>
+      <span class="logo-text" *ngIf="!collapsed">CommerceX</span>
+    </a>
+    <span class="admin-badge" *ngIf="!collapsed">Admin</span>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sidebar-nav">
+    <a
+      *ngFor="let item of menuItems"
+      [routerLink]="item.route"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: item.route === '/admin' }"
+      class="nav-item"
+    >
+      <i [class]="item.icon"></i>
+      <span *ngIf="!collapsed">{{ item.label }}</span>
+    </a>
+  </nav>
+
+  <!-- Bottom Section -->
+  <div class="sidebar-footer">
+    <a routerLink="/" class="nav-item">
+      <i class="fa-solid fa-arrow-left"></i>
+      <span *ngIf="!collapsed">Back to Store</span>
+    </a>
+
+    <button class="toggle-btn" (click)="toggleSidebar()">
+      <i [class]="collapsed ? 'fa-solid fa-angles-right' : 'fa-solid fa-angles-left'"></i>
+    </button>
+  </div>
+</aside>

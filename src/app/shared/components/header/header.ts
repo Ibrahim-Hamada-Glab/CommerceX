@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
+  standalone: true,
   imports: [RouterLink, FormsModule],
   templateUrl: './header.html',
   styleUrl: './header.css',

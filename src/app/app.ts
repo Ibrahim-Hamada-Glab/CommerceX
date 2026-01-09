@@ -8,6 +8,7 @@ import { FilterSidePanel } from "./features/pages/filter-side-panel/filter-side-
   selector: 'app-root',
   imports: [RouterOutlet, Header, Products, FilterSidePanel],
   templateUrl: './app.html',
+  standalone: true,
   styleUrl: './app.css'
 })
 export class App {
