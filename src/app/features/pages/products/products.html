@@ -1,15 +1,31 @@
 <header class="products-header">
     <h1 class="products-title">All Products<span>(156 results)</span></h1>
-    <div class="sort-dropdown" (click)="toggleDropdown()">
+    <div
+        class="sort-dropdown"
+        (click)="toggleDropdown()"
+        (keydown.enter)="toggleDropdown()"
+        (keydown.space)="toggleDropdown(); $event.preventDefault()"
+        tabindex="0"
+        role="button"
+        aria-label="Sort products"
+        [attr.aria-expanded]="isDropdownOpen"
+        aria-haspopup="listbox"
+    >
         <span class="sort-label">Sort by:</span>
         <span class="sort-selected">{{ selectedSort }}</span>
-        <i class="fa-solid fa-chevron-down" [class.rotate]="isDropdownOpen"></i>
+        <i class="fa-solid fa-chevron-down" [class.rotate]="isDropdownOpen" aria-hidden="true"></i>
         @if (isDropdownOpen) {
-            <ul class="sort-menu">
+            <ul class="sort-menu" role="listbox">
                 @for (option of sortOptions; track option.value) {
                     <li
                         [class.active]="option.label === selectedSort"
-                        (click)="selectSort(option); $event.stopPropagation()">
+                        (click)="selectSort(option); $event.stopPropagation()"
+                        (keydown.enter)="selectSort(option); $event.stopPropagation()"
+                        (keydown.space)="selectSort(option); $event.stopPropagation(); $event.preventDefault()"
+                        tabindex="0"
+                        role="option"
+                        [attr.aria-selected]="option.label === selectedSort"
+                    >
                         {{ option.label }}
                     </li>
                 }
@@ -48,5 +64,3 @@
     </li>
   </ul>
 </nav>
- 
- 
