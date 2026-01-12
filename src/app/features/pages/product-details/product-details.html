@@ -12,15 +12,15 @@
             }
           </div>
           @if (images.length > 1) {
-            <button class="nav-btn prev" (click)="prevImage()">
-              <span>&#8249;</span>
+            <button class="nav-btn prev" (click)="prevImage()" aria-label="Previous image">
+              <span aria-hidden="true">&#8249;</span>
             </button>
-            <button class="nav-btn next" (click)="nextImage()">
-              <span>&#8250;</span>
+            <button class="nav-btn next" (click)="nextImage()" aria-label="Next image">
+              <span aria-hidden="true">&#8250;</span>
             </button>
             <div class="slider-dots">
               @for (image of images; track $index) {
-                <button class="dot" [class.active]="selectedImageIndex === $index" (click)="selectImage($index)"></button>
+                <button class="dot" [class.active]="selectedImageIndex === $index" (click)="selectImage($index)" [attr.aria-label]="'View image ' + ($index + 1)"></button>
               }
             </div>
           }
@@ -38,21 +38,21 @@
       <div class="product-info">
         <div class="product-breadcrumb">
           <a href="/">Home</a>
-          <span class="separator">/</span>
+          <span class="separator" aria-hidden="true">/</span>
           <a href="/products">Products</a>
-          <span class="separator">/</span>
+          <span class="separator" aria-hidden="true">/</span>
           <span class="current">Product Name</span>
         </div>
 
         <h1 class="product-title">Premium Wireless Headphones</h1>
 
         <div class="product-rating">
-          <div class="stars">
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star filled">★</span>
-            <span class="star">★</span>
+          <div class="stars" aria-label="4 out of 5 stars" role="img">
+            <span class="star filled" aria-hidden="true">★</span>
+            <span class="star filled" aria-hidden="true">★</span>
+            <span class="star filled" aria-hidden="true">★</span>
+            <span class="star filled" aria-hidden="true">★</span>
+            <span class="star" aria-hidden="true">★</span>
           </div>
           <span class="rating-count">(128 reviews)</span>
         </div>
@@ -72,47 +72,47 @@
           <div class="option-group">
             <label class="option-label">Color</label>
             <div class="color-options">
-              <button class="color-btn active" style="background-color: #000000;" title="Black"></button>
-              <button class="color-btn" style="background-color: #ffffff; border: 1px solid #ddd;" title="White"></button>
-              <button class="color-btn" style="background-color: #1a73e8;" title="Blue"></button>
-              <button class="color-btn" style="background-color: #ea4335;" title="Red"></button>
+              <button class="color-btn active" style="background-color: #000000;" title="Black" aria-label="Select Black color"></button>
+              <button class="color-btn" style="background-color: #ffffff; border: 1px solid #ddd;" title="White" aria-label="Select White color"></button>
+              <button class="color-btn" style="background-color: #1a73e8;" title="Blue" aria-label="Select Blue color"></button>
+              <button class="color-btn" style="background-color: #ea4335;" title="Red" aria-label="Select Red color"></button>
             </div>
           </div>
 
           <div class="option-group">
             <label class="option-label">Quantity</label>
             <div class="quantity-selector">
-              <button class="qty-btn minus" (click)="decreaseQty()">−</button>
-              <input type="number" class="qty-input" [(ngModel)]="quantity" min="1" max="10">
-              <button class="qty-btn plus" (click)="increaseQty()">+</button>
+              <button class="qty-btn minus" (click)="decreaseQty()" aria-label="Decrease quantity">−</button>
+              <input type="number" class="qty-input" [(ngModel)]="quantity" min="1" max="10" aria-label="Quantity">
+              <button class="qty-btn plus" (click)="increaseQty()" aria-label="Increase quantity">+</button>
             </div>
           </div>
         </div>
 
         <div class="product-actions">
           <button class="btn btn-primary add-to-cart">
-            <span class="btn-icon">🛒</span>
+            <span class="btn-icon" aria-hidden="true">🛒</span>
             Add to Cart
           </button>
           <button class="btn btn-secondary buy-now">
             Buy Now
           </button>
-          <button class="btn btn-icon-only wishlist-btn" title="Add to Wishlist">
-            ♡
+          <button class="btn btn-icon-only wishlist-btn" title="Add to Wishlist" aria-label="Add to Wishlist">
+            <span aria-hidden="true">♡</span>
           </button>
         </div>
 
         <div class="product-meta">
           <div class="meta-item">
-            <span class="meta-icon">📦</span>
+            <span class="meta-icon" aria-hidden="true">📦</span>
             <span class="meta-text">Free shipping on orders over $50</span>
           </div>
           <div class="meta-item">
-            <span class="meta-icon">↩️</span>
+            <span class="meta-icon" aria-hidden="true">↩️</span>
             <span class="meta-text">30-day easy returns</span>
           </div>
           <div class="meta-item">
-            <span class="meta-icon">🛡️</span>
+            <span class="meta-icon" aria-hidden="true">🛡️</span>
             <span class="meta-text">2-year warranty included</span>
           </div>
         </div>
