@@ -25,7 +25,11 @@
     font-size: 14px;
 }
 
-.sort-dropdown {
+.sort-dropdown-container {
+    position: relative;
+}
+
+.sort-dropdown-trigger {
     position: relative;
     display: flex;
     align-items: center;
@@ -37,9 +41,12 @@
     cursor: pointer;
     user-select: none;
     transition: background 0.2s ease;
+    border: none;
+    font-family: inherit;
+    width: 100%;
 }
 
-.sort-dropdown:hover {
+.sort-dropdown-trigger:hover {
     background: var(--gray-medium);
 }
 
@@ -53,13 +60,13 @@
     color: var(--text-primary);
 }
 
-.sort-dropdown i {
+.sort-dropdown-trigger i {
     font-size: 12px;
     color: var(--text-secondary);
     transition: transform 0.2s ease;
 }
 
-.sort-dropdown i.rotate {
+.sort-dropdown-trigger i.rotate {
     transform: rotate(180deg);
 }
 
@@ -85,7 +92,8 @@
     transition: background 0.15s ease;
 }
 
-.sort-menu li:hover {
+.sort-menu li:hover,
+.sort-menu li.focused {
     background: var(--gray-light);
 }
 
