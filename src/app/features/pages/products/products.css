@@ -25,8 +25,11 @@
     font-size: 14px;
 }
 
-.sort-dropdown {
+.sort-container {
     position: relative;
+}
+
+.sort-dropdown {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -37,6 +40,8 @@
     cursor: pointer;
     user-select: none;
     transition: background 0.2s ease;
+    border: none;
+    font-family: inherit;
 }
 
 .sort-dropdown:hover {
