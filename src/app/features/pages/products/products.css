@@ -25,8 +25,12 @@
     font-size: 14px;
 }
 
-.sort-dropdown {
+.sort-wrapper {
     position: relative;
+    display: inline-block;
+}
+
+.sort-dropdown {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -37,10 +41,19 @@
     cursor: pointer;
     user-select: none;
     transition: background 0.2s ease;
+    border: none; /* Reset button style */
+    font-family: inherit; /* Reset button style */
+    text-align: left; /* Reset button style */
+    width: 100%;
 }
 
 .sort-dropdown:hover {
     background: var(--gray-medium);
+}
+
+.sort-dropdown:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
 }
 
 .sort-label {
@@ -85,8 +98,9 @@
     transition: background 0.15s ease;
 }
 
-.sort-menu li:hover {
-    background: var(--gray-light);
+.sort-menu li:hover,
+.sort-menu li.focused { /* Add focused state styling */
+    background: var(--gray-medium); /* Darker gray for better visibility */
 }
 
 .sort-menu li.active {
