@@ -1,14 +1,27 @@
 <header class="products-header">
     <h1 class="products-title">All Products<span>(156 results)</span></h1>
-    <div class="sort-dropdown" (click)="toggleDropdown()">
+    <div class="sort-dropdown"
+         role="combobox"
+         aria-haspopup="listbox"
+         [attr.aria-expanded]="isDropdownOpen"
+         aria-label="Sort by"
+         aria-controls="sort-menu"
+         [attr.aria-activedescendant]="isDropdownOpen ? 'sort-option-' + focusedOptionIndex : null"
+         tabindex="0"
+         (click)="toggleDropdown()"
+         (keydown)="onTriggerKeydown($event)">
         <span class="sort-label">Sort by:</span>
         <span class="sort-selected">{{ selectedSort }}</span>
-        <i class="fa-solid fa-chevron-down" [class.rotate]="isDropdownOpen"></i>
+        <i class="fa-solid fa-chevron-down" [class.rotate]="isDropdownOpen" aria-hidden="true"></i>
         @if (isDropdownOpen) {
-            <ul class="sort-menu">
-                @for (option of sortOptions; track option.value) {
+            <ul id="sort-menu" class="sort-menu" role="listbox">
+                @for (option of sortOptions; track option.value; let i = $index) {
                     <li
+                        [id]="'sort-option-' + i"
+                        role="option"
+                        [attr.aria-selected]="option.label === selectedSort"
                         [class.active]="option.label === selectedSort"
+                        [class.focused]="i === focusedOptionIndex"
                         (click)="selectSort(option); $event.stopPropagation()">
                         {{ option.label }}
                     </li>

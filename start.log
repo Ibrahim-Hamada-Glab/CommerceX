@@ -1,0 +1,60 @@
+
+> commerce-x@0.0.0 start /app
+> ng serve
+
+❯ Building...
+✔ Building...
+Initial chunk files | Names         |  Raw size
+main.js             | main          | 613.56 kB |
+styles.css          | styles        | 406.97 kB |
+polyfills.js        | polyfills     |  95 bytes |
+
+                    | Initial total |   1.02 MB
+
+Application bundle generation complete. [4.299 seconds] - 2026-01-16T16:59:45.092Z
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: Products is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:9:34:
+[37m      9 │   imports: [RouterOutlet, Header, [32mProducts[37m, FilterSidePanel],
+        ╵                                   [32m~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: FilterSidePanel is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:9:44:
+[37m      9 │   imports: [RouterOutlet, Header, Products, [32mFilterSidePanel[37m],
+        ╵                                             [32m~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: RouterLink is not used within the template of AdminCustomers[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/pages/admin/customers/admin-customers.ts:10:12:
+[37m      10 │   imports: [[32mRouterLink[37m, CommonModule, FormsModule, AdminSidebar],
+         ╵             [32m~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: RouterLink is not used within the template of AdminOrders[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/pages/admin/orders/admin-orders.ts:10:12:
+[37m      10 │   imports: [[32mRouterLink[37m, CommonModule, FormsModule, AdminSidebar],
+         ╵             [32m~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: RouterLink is not used within the template of AdminProducts[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/pages/admin/products/admin-products.ts:10:12:
+[37m      10 │   imports: [[32mRouterLink[37m, CommonModule, FormsModule, AdminSidebar],
+         ╵             [32m~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: All imports are unused[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/pages/product/product.ts:6:2:
+[37m      6 │   [32mimports[37m: [RouterOutlet],
+        ╵   [32m~~~~~~~[0m
+
+
+Watch mode enabled. Watching for file changes...
+NOTE: Raw file sizes do not reflect development server per-request transformations.
+  ➜  Local:   http://localhost:4200/
