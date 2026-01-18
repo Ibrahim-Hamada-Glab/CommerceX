@@ -16,4 +16,11 @@ export class Product {
   openProductDetails(){
     this.RouterOutlet.navigate(['/product', 1]);
   }
+
+  onKeydown(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.openProductDetails();
+    }
+  }
 }
